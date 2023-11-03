@@ -1,36 +1,37 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Kehadiran;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class KehadiranController extends Controller
+class AdminKehadiranController extends Controller
 {
     public function getAllKehadiran()
     {
-        $kehadiran = Kehadiran::with('user')->get();
+        $kehadiran = Kehadiran::with('user.role')->get();
         return response()->json(['data' => $kehadiran], 200);
     }
 
-    // public function getByUUIDKehadirans($uuid)
-    // {
-    //     $user = User::where('uuid', $uuid)->first();
-    //     $Kehadiran = Kehadiran::with('user')->where('user_id', $user->id)->first();
-    //     return response()->json(['data' => $Kehadiran], 200);
-    // }
-
-    public function getByUserIDKehadirans($user_id)
+    public function getByUUIDKehadiran($uuid)
     {
-        $Kehadiran = Kehadiran::with('user')->where('user_id', $user_id)->first();
+        $user = User::where('uuid', $uuid)->first();
+        $Kehadiran = Kehadiran::with('user.role')->where('user_id', $user->id)->first();
         return response()->json(['data' => $Kehadiran], 200);
     }
 
-    public function getByIDKehadirans($id)
+    public function getByUserIDKehadiran($user_id)
     {
-        $Kehadiran = Kehadiran::with('user')->where('id', $id)->first();
+        $Kehadiran = Kehadiran::with('user.role')->where('user_id', $user_id)->first();
+        return response()->json(['data' => $Kehadiran], 200);
+    }
+
+    public function getByIDKehadiran($id)
+    {
+        $Kehadiran = Kehadiran::with('user.role')->where('id', $id)->first();
         return response()->json(['data' => $Kehadiran], 200);
     }
 

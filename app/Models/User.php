@@ -24,6 +24,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'image_profile',
+        'role_id',
     ];
 
     /**
@@ -69,6 +70,10 @@ class User extends Authenticatable implements JWTSubject
     }
     public function kehadiran()
     {
-        return $this->hasMany(Kehadiran::class, 'useri_id');
+        return $this->hasMany(Kehadiran::class, 'user_id');
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }
