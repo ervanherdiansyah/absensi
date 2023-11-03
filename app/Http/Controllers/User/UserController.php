@@ -26,7 +26,7 @@ class UserController extends Controller
 
             $user = User::where('uuid', $uuid)->first();
             if (Request()->hasFile('image_profile')) {
-                if (Storage::exists($user->image_profile)) {
+                if ($user->image_profile && Storage::exists($user->image_profile)) {
                     Storage::delete($user->image_profile);
                 }
                 $file_name = $request->image_profile->getClientOriginalName();
